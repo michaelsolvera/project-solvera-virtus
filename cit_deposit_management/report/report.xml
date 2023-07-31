@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="report_sale_deposit" model="ir.actions.report">
+            <field name="name">Sales Deposit Report</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cit_deposit_management.sale_deposit_template</field>
+            <field name="report_file">cit_deposit_management.sale_deposit_template</field>
+            <field name="print_report_name">('%s Sales Deposit Report' % str(object.name))</field>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="report_purchase_deposit" model="ir.actions.report">
+            <field name="name">Purchase Deposit Report</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cit_deposit_management.purchase_deposit_template</field>
+            <field name="report_file">cit_deposit_management.purchase_deposit_template</field>
+            <field name="print_report_name">('%s Purchase Deposit Report' % str(object.name))</field>
+            <field name="binding_type">report</field>
+        </record>
+	</data>
+</odoo>

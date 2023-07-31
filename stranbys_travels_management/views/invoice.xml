@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account move inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[2][@name='action_post']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_sent']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_register_payment']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='preview_invoice']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_reverse']" position="attributes">
+                <attribute name="groups">stranbys_travels_management.access_for_user_group</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_reference']" position="after">
+                <field name="service_type_id"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')], 'required': [('move_type', '=', 'out_invoice')]}"
+                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                <field name="pnr"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')], 'required': [('move_type', '=', 'out_invoice')]}"/>
+                <field name="attachment" filename="file_name"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+                <field name="file_name" invisible="1" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+                <field name="ticket_no" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+                <field name="passenger_name" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_date']" position="after">
+                <field name="from_id" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"
+                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                <field name="to_id" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"
+                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+                <field name="departure_date" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+                <field name="issued_through" widget="many2many_tags"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"
+                       context="{'res_partner_search_mode': 'supplier', 'show_address': 1, 'show_vat': True}"
+                       options="{&quot;always_reload&quot;: True}"/>
+                <field name="agent_id" widget="many2many_tags"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"
+                       options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"/>
+            </xpath>
+
+
+            <xpath expr="//page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='quantity']"
+                   position="after">
+                <field name="cost_value" attrs="{'column_invisible': [('parent.move_type', '!=', 'out_invoice')]}"
+                       force_save="1"/>
+                <field name="profit" attrs="{'column_invisible': [('parent.move_type', '!=', 'out_invoice')]}"
+                       force_save="1"
+                       invisible="1"/>
+                <!--                 'currency_id': fields.many2one('res.currency','Currency',required=True, readonly=True, states={'draft':[('readonly',False)]})-->
+            </xpath>
+
+            <!-- <xpath expr="//page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='account_id']" position="after">
+                <field name="cost_value" force_save="1" invisible="1"/>
+                <field name="profit" force_save="1" invisible="1"/>
+            </xpath> -->
+
+            <xpath expr="//field[@name='payment_reference']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='ref']" position="replace"/>
+            <xpath expr="//field[@name='service_type_id']" position='before'>
+                <field name="ref" string="Customer Reference"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="profit_sum" class="oe_right" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+                <field name="pos_amount_total" invisible="1"
+                       attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="after">
+                <h2 attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}">POS Machine</h2>
+                <br/>
+                <field name="pos_machine_ids" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}">
+                    <tree editable="bottom">
+                        <field name="authentication_code"/>
+                        <field name="amount"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!--    Not visible edit option in accove move form view-->
+
+    <record id="account_move_form_view_no_edit" model="ir.ui.view">
+        <field name="name">account move no edit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="groups_id" eval="[(4, ref('stranbys_travels_management.no_edit_button_access_group'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="edit">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    visible edit option in accove move form view-->
+
+    <record id="account_move_form_view_edit" model="ir.ui.view">
+        <field name="name">account move edit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="groups_id" eval="[(4, ref('stranbys_travels_management.access_for_user_group'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="edit">true</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    hiding other Invoice Prints-->
+
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+    <record id="account.account_invoices_without_payment" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<odoo>
+
+	<record model="ir.ui.view" id="view_company_form_inherit_city">
+		<field name="name">Company Form City</field>
+		<field name="model">res.company</field>
+		<field name="inherit_id" ref="base.view_company_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state_id']" position="replace">
+				<field name="state_id" placeholder="State" style="width: 30%%"
+					class="o_address_state" domain="[('country_id','=',country_id)]"
+					options='{"no_create":True}' />
+				<field name="kecamatan_id" placeholder="Kecamatan"
+					options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+					domain="[('city_id','=',city_id)]" />
+				<field name="kelurahan_id" placeholder="Kelurahan"
+					options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+					domain="[('kecamatan_id','=',kecamatan_id)]" />
+			</xpath>
+			<xpath expr="//field[@name='city']" position="replace">
+				<field name="city_id" placeholder="City" style="width: 38%%"
+					class="o_address_city" domain="[('state_id','=',state_id)]" attr="{'readonly':[('state_id','=', False)]}" />
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_form_inherit_city">
+		<field name="name">Partner Form City</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state_id']" position="after">
+				<field name="kecamatan_id" placeholder="Kecamatan"
+					options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+					domain="[('city_id','=',city_id)]" />
+				<field name="kelurahan_id" placeholder="Kelurahan"
+					options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+					domain="[('kecamatan_id','=',kecamatan_id)]" />
+			</xpath>
+			<xpath expr="//field[@name='city']" position="attributes">
+				<attribute name="invisible">True</attribute>
+			</xpath>
+			<xpath expr="//field[@name='city']" position="after">
+				<field name="city_id" placeholder="City" style="width: 38%%"
+					class="o_address_city" domain="[('state_id','=',state_id)]" attr="{'readonly':[('state_id','=', False)]}" />
+			</xpath>
+		</field>
+	</record>
+
+
+</odoo>

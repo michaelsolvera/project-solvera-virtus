@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="deposit_view_account_move_form" model="ir.ui.view">
+            <field name="name">account.move.deposit.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="is_deposit" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='invoice_line_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('is_deposit', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

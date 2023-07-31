@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='loan_management_action' model='ir.actions.act_window'>
+        <field name="name">Loan Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loans.loans</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Add Loan
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Loan" id="loan_base_menu" />
+    <menuitem name="Loans" id="loan_sub_menu" parent="loan_base_menu" action="loan_management_action" sequence="1" />
+
+    <!-- Form View -->
+    <record id="loan_management_view_form" model="ir.ui.view">
+        <field name="name">Loan Management Form</field>
+        <field name="model">loans.loans</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group string="Loan Informations">
+                        <field name="borrower" />
+                        <field name="loan_no" />
+                        <field name="loan_date" />
+                        <field name="loan_type" />
+                    </group>
+                    <group string="Loan Terms">
+                        <field name="disbursed_by" />
+                        <!--field name="interest_method" /-->
+                        <field name="amount" />
+                        <!--field name="interest_type" /-->
+                        <field name="interest_percentage" />
+                        <!--field name="interest_amount" /-->
+                        <field name="loan_duration" />
+                        <field name="payable_amount" />
+                        <field name="paid_amount" />
+                        <field name="remaining_amount" />
+                    </group>
+                    <group string="Calculate Payments">
+                        <field name="montlyPayment" />
+                        <field name="total_loan_amount" />
+                        <field name="total_interest_amount" />
+                    </group>
+                    <group string="Repayments">
+                        <field name="repayment" />
+                    </group>
+                    <group string="Loan status">
+                        <field name="loan_status" />
+                        <field name="payment_status" />
+                    </group>
+                    <group string="Others"> 
+                        <field name="guarantor" />
+                        <field name="loan_file" />
+                        <field name="description" />
+                        <field name="loan_officer" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree(list) view-->
+    <record id="loan_management_view_tree" model="ir.ui.view">
+        <field name="name">Loan Management Tree </field>
+        <field name="model">loans.loans</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="loan_no" />
+                <field name="loan_date" />
+                <field name="borrower" />
+                <field name="loan_type" />
+                <field name="amount" />
+                <field name="loan_duration" />
+                <field name="repayment" />
+                <field name="payable_amount" />
+                <field name="paid_amount" />
+                <field name="remaining_amount" />
+                <field name="payment_status" />
+                <field name="loan_status" />
+                <field name="loan_officer" />
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- actions  opening views on models/Form View -->
+    <record id="borrower_action" model="ir.actions.act_window">
+        <field name="name">Borrowers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">borrower.borrower</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Add Borrowers
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Borrowers" id="borrower_menu" parent="loan_base_menu" action="borrower_action" sequence="3" />
+
+
+    <!-- Form view-->
+
+    <record id="borrower_view_form" model="ir.ui.view">
+        <field name="name">borrower.borrower.view.form</field>
+        <field name="model">borrower.borrower</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group string="Borrower Information">
+                            <field name="unique_id" />
+                            <field name="title" />
+                            <field name="name" />
+                            <field name="gender" />
+                            <field name="borrower_dob" />
+                            <field name="working_status" />
+                            <field name="created_date" />
+                        </group>
+                        <group string="Borrower Contacts">
+                            <field name="address" />
+                            <field name="mobile" />
+                            <field name="phone" />
+                            <field name="email" />
+                        </group>
+                    </group>
+                    <group string="Borrower Attachments">
+                        <field name="borrower_photo" />
+                        <field name="borrower_file" />
+                        <field name="description" />
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="borrower_list_view">
+        <field name="name">Borrowers</field>
+        <field name="model">borrower.borrower</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="unique_id" />
+                <field name="created_date"/>
+                <field name="title"/>
+                <field name="name"/>
+                <field name="mobile" />
+                <field name="address" />
+                <field name="gender" />
+                <field name="working_status" />
+            </tree>
+        </field>
+    </record>
+</odoo>

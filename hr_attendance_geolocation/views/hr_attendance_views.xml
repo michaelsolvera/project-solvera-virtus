@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_attendance_view_form" model="ir.ui.view">
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group" position="after">
+                <group name="locations" col="2">
+                    <label for="check_in_latitude" string="Check-in Location" />
+                    <span class="oe_inline">
+                        Latitude: <field name="check_in_latitude" nolabel="1" /><br />
+                        Longitude: <field name="check_in_longitude" nolabel="1" />
+                    </span>
+                    <label for="check_out_latitude" string="Check-out Location" />
+                    <span class="oe_inline">
+                        Latitude: <field name="check_out_latitude" nolabel="1" /><br />
+                        Longitude: <field name="check_out_longitude" nolabel="1" />
+                    </span>
+                     <field name="address_url" invisible="1"/>
+                    <field name="url_checkin" invisible="0" widget="url" readonly="1"  options="{'text_field': 'address_url'}"/>
+                    <field name="address_url_out" invisible="1"/>
+                    <field name="url_checkout" invisible="0" widget="url" readonly="1"  options="{'text_field': 'address_url_out'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form_tree" model="ir.ui.view">
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="check_in_latitude" invisible="1"/>
+                <field name="check_in_longitude" invisible="1"/>
+                <field name="check_out_latitude" invisible="1"/>
+                <field name="check_out_longitude" invisible="1"/>
+                <field name="address_url" invisible="1"/>
+                <field name="url_checkin" invisible="0" widget="url" readonly="1"  options="{'text_field': 'address_url'}"/>
+                <field name="address_url_out" invisible="1"/>
+                <field name="url_checkout" invisible="0" widget="url" readonly="1"  options="{'text_field': 'address_url_out'}"/>
+                
+            </xpath> 
+        </field>
+    </record>
+</odoo>

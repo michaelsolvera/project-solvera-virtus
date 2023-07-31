@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="asset_form_close_manual" model="ir.ui.view">
+        <field name="name">account.asset.asset.form</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="base_accounting_kit.view_account_asset_asset_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='set_to_close']" position="after">
+                <button name="close_manual" string="Closed" type="object" class="btn-primary" states="open"/>
+                <button name="open_manual" string="Open" type="object" class="btn-primary" states="close"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

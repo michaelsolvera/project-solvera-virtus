@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_deposit_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="padding-top:43px !important;">
+                        <div class="container" style="border-width: thin;border-style: dashed;">
+                            <div class="col-12">
+                                <h4>
+                                    <small> Report Period : <t t-esc="form['from_date']"/> To <t t-esc="form['to_date']"/> </small>
+                                </h4>
+                            </div>
+                            <t t-foreach="monthlist" t-as="month">
+                                <t t-if="form['by_type'] == 'customer'">
+                                    <t t-foreach="form['customer_ids']" t-as="customer">
+                                        <t t-set="sales_orders" t-value="request.env['sale.order'].with_context(allowed_company_ids=doc.env.context.get('allowed_company_ids'))._get_customer_deposit_reports_values(month,customer)"/>
+                                        <t t-if="sales_orders">
+                                            <h1><span t-esc="request.env['res.partner'].browse(customer).name"/><small><span class="float-right" t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/></small></h1>
+                                            
+                                            <t t-if="form['by_periods'] != 'd'">    
+                                                <div class="col-12 text-center mt32 mb32">
+                                                    <h4><small>  <strong> 
+                                                    <t t-esc="month[0]"/> To <t t-esc="month[1]"/></strong>  </small></h4>
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="col-12 text-center mt32 mb32">
+                                                    <h4><small>  <strong> 
+                                                    <t t-esc="month[0]"/></strong>  </small></h4>
+                                                </div>
+                                            </t>
+                                            <table class="table table-bordered" style="border-bottom:1px solid rgba(0, 0, 0, 0.35);">
+                                                <thead style="background-color: rgba(0,0,0,.075);">
+                                                    <tr>
+                                                        <th width="20%" class="text-center">Sales Order No</th>
+                                                        <th width="20%" class="text-center">Total Order Value</th>
+                                                        <th width="20%" class="text-center">Total Deposit Value</th>
+                                                        <th width="20%" class="text-center">Total Return Deposit Value</th>
+                                                        <th width="20%" class="text-center">Total Remaining Deposit Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="sales_orders" t-as="sale_id">
+                                                        <tr class="text-center">
+                                                            <t t-set="return_val" t-value="sale_id._get_return_value()"/>
+                                                            <td><span t-esc="sale_id.name"/></td>
+                                                            <td><span t-esc="sale_id.amount_total" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                            <td><span t-esc="sale_id.amount_deposit" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                            <td><span t-esc="return_val" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                            <td><span t-esc="sale_id.amount_deposit - round(return_val, 2)" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-elif="form['by_type'] == 'all'">
+                                    <t t-set="sales_orders" t-value="request.env['sale.order'].with_context(allowed_company_ids=doc.env.context.get('allowed_company_ids'))._get_deposit_reports_values(month)"/>
+                                    <t t-if="sales_orders">
+                                        <t t-if="form['by_periods'] != 'd'">    
+                                            <div class="col-12 text-center mt32 mb32">
+                                                <h4><small>  <strong> 
+                                                <t t-esc="month[0]"/> To <t t-esc="month[1]"/></strong>  </small></h4>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-12 text-center mt32 mb32">
+                                                <h4><small>  <strong> 
+                                                <t t-esc="month[0]"/></strong>  </small></h4>
+                                            </div>
+                                        </t>
+                                        <table class="table table-bordered" style="border-bottom:1px solid rgba(0, 0, 0, 0.35);">
+                                            <thead style="background-color: rgba(0,0,0,.075);">
+                                                <tr>
+                                                    <th width="15%" class="text-center">Customer</th>
+                                                    <th width="14%" class="text-center">Sales Order No</th>
+                                                    <th width="14%" class="text-center">Order Date</th>
+                                                    <th width="14%" class="text-center">Total Order Value</th>
+                                                    <th width="14%" class="text-center">Total Deposit Value</th>
+                                                    <th width="14%" class="text-center">Total Return Deposit Value</th>
+                                                    <th width="14%" class="text-center">Total Remaining Deposit Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="sales_orders" t-as="sale_id">
+                                                    <tr class="text-center">
+                                                        <t t-set="return_val" t-value="sale_id._get_return_value()"/>
+                                                        <td><span t-esc="sale_id.partner_id.name"/></td>
+                                                        <td><span t-esc="sale_id.name"/></td>
+                                                        <td><span t-esc="sale_id.date_order.date()"/></td>
+                                                        <td><span t-esc="sale_id.amount_total" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                        <td><span t-esc="sale_id.amount_deposit" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                        <td><span t-esc="return_val" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                        <td><span t-esc="sale_id.amount_deposit - round(return_val, 2)" t-options='{"widget": "monetary", "display_currency": sale_id.pricelist_id.currency_id}'/></td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="purchase_deposit_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="padding-top:43px !important;">
+                        <div class="container" style="border-width: thin;border-style: dashed;">
+                            <div class="col-12">
+                                <h4>
+                                    <small> Report Period : <t t-esc="form['from_date']"/> To <t t-esc="form['to_date']"/> </small>
+                                </h4>
+                            </div>
+                            <t t-foreach="monthlist" t-as="month">
+                                <t t-if="form['by_type'] == 'vendor'">
+                                    <t t-foreach="form['vendor_ids']" t-as="customer">
+                                        <t t-set="purchase_orders" t-value="request.env['purchase.order'].with_context(allowed_company_ids=doc.env.context.get('allowed_company_ids'))._get_vendor_deposit_reports_values(month,customer)"/>
+                                        <t t-if="purchase_orders">
+                                            <h1><span t-esc="request.env['res.partner'].browse(customer).name"/><small><span class="float-right" t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/></small></h1>
+                                            
+                                            <t t-if="form['by_periods'] != 'd'">    
+                                                <div class="col-12 text-center mt32 mb32">
+                                                    <h4><small>  <strong> 
+                                                    <t t-esc="month[0]"/> To <t t-esc="month[1]"/></strong>  </small></h4>
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="col-12 text-center mt32 mb32">
+                                                    <h4><small>  <strong> 
+                                                    <t t-esc="month[0]"/></strong>  </small></h4>
+                                                </div>
+                                            </t>
+                                            <table class="table table-bordered" style="border-bottom:1px solid rgba(0, 0, 0, 0.35);">
+                                                <thead style="background-color: rgba(0,0,0,.075);">
+                                                    <tr>
+                                                        <th width="20%" class="text-center">Purchase Order No</th>
+                                                        <th width="20%" class="text-center">Total Order Value</th>
+                                                        <th width="20%" class="text-center">Total Deposit Value</th>
+                                                        <th width="20%" class="text-center">Total Return Deposit Value</th>
+                                                        <th width="20%" class="text-center">Total Remaining Deposit Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="purchase_orders" t-as="purchase_id">
+                                                        <t t-set="return_val" t-value="purchase_id._get_return_value()"/>
+                                                        <tr class="text-center">
+                                                            <td><span t-esc="purchase_id.name"/></td>
+                                                            <td><span t-esc="purchase_id.amount_total" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                            <td><span t-esc="purchase_id.amount_deposit" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                            <td><span t-esc="return_val" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                            <td><span t-esc="purchase_id.amount_deposit - round(return_val, 2)" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-elif="form['by_type'] == 'all'">
+                                    <t t-set="purchase_orders" t-value="request.env['purchase.order'].with_context(allowed_company_ids=doc.env.context.get('allowed_company_ids'))._get_deposit_reports_values(month)"/>
+                                    <t t-if="purchase_orders">
+                                        <t t-if="form['by_periods'] != 'd'">    
+                                            <div class="col-12 text-center mt32 mb32">
+                                                <h4><small>  <strong> 
+                                                <t t-esc="month[0]"/> To <t t-esc="month[1]"/></strong>  </small></h4>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-12 text-center mt32 mb32">
+                                                <h4><small>  <strong> 
+                                                <t t-esc="month[0]"/></strong>  </small></h4>
+                                            </div>
+                                        </t>
+                                        <table class="table table-bordered" style="border-bottom:1px solid rgba(0, 0, 0, 0.35);">
+                                            <thead style="background-color: rgba(0,0,0,.075);">
+                                                <tr>
+                                                    <th width="15%" class="text-center">Vendor</th>
+                                                    <th width="14%" class="text-center">Purchase Order No</th>
+                                                    <th width="14%" class="text-center">Order Date</th>
+                                                    <th width="14%" class="text-center">Total Order Value</th>
+                                                    <th width="14%" class="text-center">Total Deposit Value</th>
+                                                    <th width="14%" class="text-center">Total Return Deposit Value</th>
+                                                    <th width="14%" class="text-center">Total Remaining Deposit Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="purchase_orders" t-as="purchase_id">
+                                                    <tr class="text-center">
+                                                        <t t-set="return_val" t-value="purchase_id._get_return_value()"/>
+                                                        <td><span t-esc="purchase_id.partner_id.name"/></td>
+                                                        <td><span t-esc="purchase_id.name"/></td>
+                                                        <td><span t-esc="purchase_id.date_order.date()"/></td>
+                                                        <td><span t-esc="purchase_id.amount_total" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                        <td><span t-esc="purchase_id.amount_deposit" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                        <td><span t-esc="return_val" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                        <td><span t-esc="purchase_id.amount_deposit - round(return_val, 2)" t-options='{"widget": "monetary", "display_currency": purchase_id.currency_id}'/></td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

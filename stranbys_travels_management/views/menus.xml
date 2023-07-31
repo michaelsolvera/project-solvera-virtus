@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <menuitem id="view_masters_menu"
+        name="Masters"
+        parent="account.menu_finance_configuration"
+        sequence="87"/>
+       
+
+        <menuitem id="view_service_type_menu"
+        name="Service Type"
+        parent="view_masters_menu"
+        sequence="1"
+        action="stranbys_travels_management.action_view_service_type"/>
+
+        <menuitem id="view_agent_master_menu"
+        name="Agent"
+        parent="view_masters_menu"
+        sequence="2"
+        action="stranbys_travels_management.action_view_agent_master"/>
+
+        <menuitem id="view_locations_menu"
+        name="Location"
+        parent="view_masters_menu"
+        sequence="3"
+        action="stranbys_travels_management.action_view_location"/>
+
+        <menuitem id="view_terms_and_conditions_menu"
+        name="Terms &amp; Conditions"
+        parent="view_masters_menu"
+        sequence="4"
+        action="account.action_account_config"/>
+
+    
+        <menuitem id="account.menu_action_move_out_refund_type" parent="account.menu_finance_receivables" action="account.action_move_out_refund_type" groups="stranbys_travels_management.access_for_user_group" sequence="2"/>
+        <menuitem id="account.menu_action_move_out_receipt_type" parent="account.menu_finance_receivables" action="account.action_move_out_receipt_type" groups="stranbys_travels_management.access_for_user_group,account.group_sale_receipts" sequence="3"/>
+        <menuitem id="account.menu_action_account_payments_receivable" parent="account.menu_finance_receivables" action="account.action_account_payments" groups="stranbys_travels_management.access_for_user_group" sequence="15"/>
+        <menuitem id="account.product_product_menu_sellable" name="Products" parent="account.menu_finance_receivables" action="account.product_product_action_sellable" groups="stranbys_travels_management.access_for_user_group" sequence="100"/>
+        <menuitem id="account.menu_account_customer" name="Customers" parent="account.menu_finance_receivables" action="account.res_partner_action_customer" groups="stranbys_travels_management.access_for_user_group" sequence="110"/>
+
+        <menuitem id="account.menu_finance_payables" name="Vendors" sequence="3" parent="account.menu_finance" groups="stranbys_travels_management.access_for_user_group"/>
+        <menuitem id="account.menu_finance_reports" name="Reporting" sequence="20" parent="account.menu_finance" groups="account.group_account_readonly,account.group_account_invoice,stranbys_travels_management.access_for_user_group"/>
+        <menuitem id="account.account_reports_management_menu" name="Management" parent="account.menu_finance_reports" sequence="4" groups="stranbys_travels_management.access_for_user_group"/>
+        <menuitem id="account.menu_finance_entries" name="Accounting" sequence="4" parent="account.menu_finance" groups="account.group_account_readonly,stranbys_travels_management.access_for_user_group"/>
+
+    </data>
+
+
+</odoo>

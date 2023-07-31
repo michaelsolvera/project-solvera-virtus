@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="report_invoice_solvy" model="ir.actions.report">
+        <field name="name">Report Invoice Solvy</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">solvera_custom_report_solvy.report_invoice_solvy_action</field>
+        <field name="report_file">solvera_custom_report_solvy.report_invoice_solvy_action</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    
+</odoo>

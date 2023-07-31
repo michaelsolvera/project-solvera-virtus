@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="deposit_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.deposit.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="is_deposit_picking" invisible="1"/>
+                    <button name="%(stock.act_stock_return_picking)d" string="Return With Deposit" attrs="{'invisible': ['|',('state', '!=', 'done'),('is_deposit_picking','=',False)]}" type="action" groups="base.group_user" context="{'deposit_refund':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

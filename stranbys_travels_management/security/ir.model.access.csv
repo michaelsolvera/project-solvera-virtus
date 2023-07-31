@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+service_type_crud,service_type_crud,model_service_type,,1,1,1,1
+location_master_crud,location_master_crud,model_location_master,,1,1,1,1
+agent_master_crud,agent_master_crud,model_agent_master,,1,1,1,1
+pos_machine_lines_crud,pos_machine_lines_crud,model_pos_machine_lines,,1,1,1,1
+

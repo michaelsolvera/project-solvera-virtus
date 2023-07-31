@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+
+        <record id="group_access_rights" model="res.groups">
+            <field name="name">Subject to access right tags on Contacts</field>
+        </record>
+
+        <record model="ir.rule" id="res_partner_rule">
+            <field name="name">res.partner company</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <!-- We exclude partners that have internal users (`partner_share` field) from
+            the multi-company rule because it might interfere with the user's company rule
+            and make some users unselectable in relational fields. This means that partners
+            of internal users are always visible, not matter the company setting. -->
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+        </record>
+
+        <record id="access_right_tags_res_partner" model="ir.rule">
+            <field name="name">Contacts per Access Rights</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="domain_force">['|', '|', '|', ('user_ids.id', '=', user.id), ('user_id','=',user.id),('create_uid.user_ids', '=', user.id), ('related_user_ids.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('access_res_partner_contractor.group_access_rights'))]"/>
+        </record>
+
+    </data>
+</odoo>

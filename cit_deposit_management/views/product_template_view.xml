@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="deposit_product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.deposit.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_deposit"/>
+                        <label for="is_deposit"/>
+                    </div>
+                    <div>
+                        <field name="is_container"/>
+                        <label for="is_container"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="deposit_product_template_form" model="ir.ui.view">
+            <field name="name">product.template.deposit.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//field[@name='barcode']" position="after">
+                    <field name="deposit_product_id" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="sale_deposit_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="purchase_deposit_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="container_product_id" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="sale_container_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="purchase_container_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="container_qty" class="oe_inline" force_save="1" attrs="{'invisible': [('is_deposit', '=', True)],'readonly': [('is_container', '!=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="deposit_product_product_form" model="ir.ui.view">
+            <field name="name">product.product.deposit.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//field[@name='barcode']" position="after">
+                    <field name="deposit_product_id" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="sale_deposit_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="purchase_deposit_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="container_product_id" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}" options="{'no_create': True}"/>
+                    <field name="sale_container_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="purchase_container_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': ['|',('is_deposit', '=', True),('is_container', '=', True)]}"/>
+                    <field name="container_qty" class="oe_inline" force_save="1" attrs="{'invisible': [('is_deposit', '=', True)],'readonly': [('is_container', '!=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

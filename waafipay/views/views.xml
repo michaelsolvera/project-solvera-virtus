@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="acquirer_form_waafipay" model="ir.ui.view">
+            <field name="name">acquirer.form.waafipay</field>
+            <field name="model">payment.acquirer</field>
+            <field name="inherit_id" ref="payment.acquirer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@name="acquirer"]' position='inside'>
+                    <group>
+                        <field name="waafipay_merchant_id"/>
+                        <field name="waafipay_storeid"/>
+                        <field name="waafipay_storekey"/>
+                        <field name="mobilwallet"/>
+                        <field name="bank"/>
+                        <field name="creditcard"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

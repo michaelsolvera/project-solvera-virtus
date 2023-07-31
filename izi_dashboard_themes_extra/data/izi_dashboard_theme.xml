@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record model="izi.dashboard.theme" id="izi_dashboard_themes_extra.izi_dashboard_theme_jade">
+      <field name="name">Jade</field>
+    </record>
+  </data>
+</odoo>

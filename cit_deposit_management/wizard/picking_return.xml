@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="deposit_view_stock_return_picking_form" model="ir.ui.view">
+            <field name="name">stock.return.picking.stock.deposit.form</field>
+            <field name="model">stock.return.picking</field>
+            <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[2]" position="after">
+                    <group>
+                        <field name="amount_deposit" invisible="not context.get('deposit_refund')"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

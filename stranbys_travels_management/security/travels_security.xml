@@ -1,0 +1,12 @@
+<odoo>
+
+    <record id="access_for_user_group" model="res.groups">
+        <field name="name">User</field>
+    </record>
+
+    <record id="no_edit_button_access_group" model="res.groups">
+        <field name="name">No Edit Access</field>
+    </record>
+      
+    
+</odoo>

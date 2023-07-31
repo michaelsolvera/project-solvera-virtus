@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="portrait_paper_format" model="report.paperformat">
+        <field name="name">European A4 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">24</field>
+        <field name="margin_left">6</field>
+        <field name="margin_right">6</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- <record id="portrait_paper_format_new" model="report.paperformat">
+        <field name="name">European A4 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">52</field>
+        <field name="margin_bottom">24</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">47</field>
+        <field name="dpi">90</field>
+    </record> -->
+
+    <report id="report_travels_invoice_print"
+            string="Print"
+            model="account.move"
+            report_type="qweb-pdf"
+            paperformat="portrait_paper_format"
+            name="stranbys_travels_management.travels_invoice_print"
+            file="stranbys_travels_management.travels_invoice_print"
+            print_report_name="object._get_report_base_filename()"/>
+
+
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+        <xpath expr="//head" position="inside">
+            <link rel="stylesheet" href="/stranbys_travels_management/static/src/css/print.css"/>
+        </xpath>
+    </template>
+
+
+     <template id="report_header">
+        <div class="header">
+            <div class="row">
+                <br/>
+                <div class="col-6 center">
+                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="left"
+                         style="max-height: 100px;"/>
+                </div>
+                |
+                <i class="fa fa-phone-alt"></i>
+                <span t-field="res_company.phone"/>
+            </div>
+        </div>
+        <div class="footer">
+            <strong t-field="res_company.name"/>
+            |
+            <i class="fa fa-phone-alt"></i>
+            <span t-field="res_company.phone"/>
+            |
+            <i class="fa fa-envelope"></i>
+            <span t-field="res_company.email"/>
+            |
+            <i class="fa fa-globe"></i>
+            <span t-field="res_company.website"/>
+            <div class="row" style="border-top: 1px solid gray;">
+                <div class="col-10"></div>
+                <div class="col-2 pull-right">
+                    <small class="pull-right">
+                        <span>Page</span>
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                        <br/>
+                        <br/>
+                        <span style="font-size:8px;">
+                            DOC:
+                            <span style="font-size:8px;" t-field="o.name"/>
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="report_header_new">
+        <div class="header" style="font-size: 13px;font-family:Roboto;">
+            <div class="row">
+                <div class="col-6 pull-right text-right" style="padding-top:20px;">
+                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="right"
+                         style="max-height: 100px;"/>
+                </div>
+                <div class="col-6 left">
+                    <strong style="font-size:15px;" t-field="res_company.name"/>
+                    <span t-if="res_company.street">
+                        <br/>
+                        <span t-field="res_company.street"/>
+                    </span>
+                    <span t-if="res_company.street2">
+                        <br/>
+                        <span t-field="res_company.street2"/>
+                        <span t-field="res_company.city"/>
+                        <span t-field="res_company.state_id.name"/>
+                    </span>
+                    <span t-if="res_company.zip or res_company.country_id">
+                        <br/>
+                        <span t-field="res_company.zip"/>
+                        <span t-field="res_company.country_id.name"/>
+                    </span>
+                    <br/>
+                    <strong>TRN :</strong>
+                    <strong t-field="res_company.vat"/>
+                </div>
+            </div>
+        </div>
+        <div class="footer" style="font-size: 13px;font-family:Roboto;">
+            <strong t-field="res_company.name"/>
+            |
+            <i class="fa fa-phone-alt"></i>
+            <span t-field="res_company.phone"/>
+            |
+            <i class="fa fa-envelope"></i>
+            <span t-field="res_company.email"/>
+            |
+            <i class="fa fa-globe"></i>
+            <span t-field="res_company.website"/>
+            <div class="row" style="border-top: 1px solid gray;">
+                <div class="col-10"></div>
+                <div class="col-2 pull-right">
+                    <small class="pull-right">
+                        <span>Page</span>
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                        <br/>
+                        <br/>
+                        <span style="font-size:8px;"></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </template> 
+    <template id="report_header_minimal">
+        <div class="header">
+            <div class="row">
+                <div class="col-6"></div>
+
+                <div class="col-6 text-right mb4">
+                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="pull-right"
+                         style="max-height: 100px;"/>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+
+            <div class="row" style="border-top: 1px solid gray;">
+
+                <div class="col-10">
+
+                    <strong t-field="res_company.name"/>
+                    <br/>
+                    <i class="fa fa-phone-alt"></i>
+                    <span t-field="res_company.phone"/>
+                    |
+                    <i class="fa fa-envelope"></i>
+                    <span t-field="res_company.email"/>
+                    |
+                    <i class="fa fa-globe"></i>
+                    <span t-field="res_company.website"/>
+                </div>
+
+                <div class="col-2 pull-right">
+                    <small class="pull-right">
+                        <span>Page</span>
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                        <br/>
+                        <br/>
+                        <span style="font-size:8px;"></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_header_invoice">
+        <div class="header">
+           <br/>
+            <br/>
+<!--            <br/>-->
+            <div class="row"/>
+                    <div class="text-center">
+<!--                        <strong>-->
+                            <table class="table" style="border: 1px solid #FFFFFF; margin-bottom: 0px; border-top: 1px; border-bottom: 0.5px; background-color: #ffffff;">
+                            <tr>
+                                <th colspan="1" style="border-bottom: 0px; border-top: 0.5px solid #ffffff;">
+                                </th>
+                            </tr>
+                        </table>
+<!--                    </strong>-->
+                    </div>
+            <br/>
+            <div class="row">
+                <div class="col-6 center">
+                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="pull-left" style="max-height: 60px;"/>
+                </div>
+                <div class="col-6 text-right mb4">
+                    <strong style="font-size:15px;" t-field="res_company.name"/>
+                    <span t-if="res_company.street">
+                        <br/>
+                        <span t-field="res_company.street"/>
+                    </span>
+                    <span t-if="res_company.street2">
+                        <br/>
+                        <span t-field="res_company.street2"/>
+                        <span t-field="res_company.city"/>
+                        <span t-field="res_company.state_id.name"/>
+                    </span>
+                    <span t-if="res_company.zip or res_company.country_id">
+                        <br/>
+                        <span t-field="res_company.zip"/>
+                        <span t-field="res_company.country_id.name"/>
+                    </span>
+                    <br/>
+                    <t t-if="res_company.phone">
+                        <strong>Ph :</strong>
+                        <span t-field="res_company.phone"/>
+                        <br/>
+                    </t>
+                    <strong>TRN :</strong>
+                    <strong t-field="res_company.vat"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="row">
+                <div class="col-12" style="text-align:center">
+                    <strong>This is Computer-Generated Document Does not Require Signature</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="text-align:right">
+                    <strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></strong>
+                    <br/>
+                    <strong><span t-esc="user.name" /></strong>
+                </div>
+            </div>
+                 <div class="row"/>
+                    <div class="text-center">
+                            <table class="table" style="border: 1px solid #FFFFFF; margin-bottom: 0px; border-top: 1px; border-bottom: 0.5px; background-color: #ffffff;">
+                            <tr>
+                                <th colspan="1" style="border-bottom: 0px; border-top: 0.5px solid #ffffff;">
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+            <strong t-field="res_company.name"/>
+            |
+            <i class="fa fa-phone-alt"></i>
+            <span t-field="res_company.phone"/>
+            |
+            <i class="fa fa-envelope"></i>
+            <span t-field="res_company.email"/>
+            |
+            <i class="fa fa-globe"></i>
+            <span t-field="res_company.website"/>
+            <br/>
+
+        <!-- <span style="font-size:15px;" t-if="o.state in ('draft','pending','draft_quot', 'sent')"> QUOTATION</span>
+                            <span style="font-size:15px;" t-if="o.state in ('sale', 'done')">SALE ORDER</span>
+                            <span style="font-size:15px;" t-if="o.state in ('cancel')">CANCELLED SALE ORDER</span> -->
+            <div class="row" style="border-top: 1px solid gray;">
+                <div class="col-10"></div>
+
+                <div class="col-2 pull-right">
+                    <small class="pull-right">
+                        <span>Page</span>
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                        <br/>
+                        <br/>
+                        <span style="font-size:8px;">
+                            DOC:
+                            <span style="font-size:8px;" t-field="o.name"/>
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_header_sale">
+        <div class="header">
+           <br/>
+            <br/>
+<!--            <br/>-->
+            <div class="row"/>
+                    <div class="text-center">
+<!--                        <strong>-->
+                            <table class="table" style="border: 1px solid #FFFFFF; margin-bottom: 0px; border-top: 1px; border-bottom: 0.5px; background-color: #FF6700;">
+                            <tr>
+                                <th colspan="1" style="border-bottom: 0px; border-top: 0.5px solid #ffffff;">
+                                </th>
+                            </tr>
+                        </table>
+<!--                    </strong>-->
+                    </div>
+            <br/>
+            <div class="row">
+                <div class="col-6 center">
+                    <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="pull-left" style="max-height: 60px;"/>
+                    <img t-if="o.job_code_id.job_code_image" t-att-src="image_data_uri(o.job_code_id.job_code_image)" class="pull-left" style="max-height: 60px;"/>
+                </div>
+                <div class="col-6 text-right mb4">
+                    <strong style="font-size:15px;" t-field="res_company.name"/>
+                    <span t-if="res_company.street">
+                        <br/>
+                        <span t-field="res_company.street"/>
+                    </span>
+                    <span t-if="res_company.street2">
+                        <br/>
+                        <span t-field="res_company.street2"/>
+                        <span t-field="res_company.city"/>
+                        <span t-field="res_company.state_id.name"/>
+                    </span>
+                    <span t-if="res_company.zip or res_company.country_id">
+                        <br/>
+                        <span t-field="res_company.zip"/>
+                        <span t-field="res_company.country_id.name"/>
+                    </span>
+                    <br/>
+                    <t t-if="res_company.phone">
+                        <strong>Ph :</strong>
+                        <span t-field="res_company.phone"/>
+                        <br/>
+                    </t>
+                    <strong>TRN :</strong>
+                    <strong t-field="res_company.vat"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="row">
+                <div class="col-12" style="text-align:center">
+                    <strong>This is Computer-Generated Document Does not Require Signature</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" style="text-align:right">
+                    <strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></strong>
+                    <br/>
+                    <strong><span t-esc="user.name" /></strong>
+                </div>
+            </div>
+                 <div class="row"/>
+                    <div class="text-center">
+                            <table class="table" style="border: 1px solid #FFFFFF; margin-bottom: 0px; border-top: 1px; border-bottom: 0.5px; background-color: #004789;">
+                            <tr>
+                                <th colspan="1" style="border-bottom: 0px; border-top: 0.5px solid #ffffff;">
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+            <strong t-field="res_company.name"/>
+            |
+            <i class="fa fa-phone-alt"></i>
+            <span t-field="res_company.phone"/>
+            |
+            <i class="fa fa-envelope"></i>
+            <span t-field="res_company.email"/>
+            |
+            <i class="fa fa-globe"></i>
+            <span t-field="res_company.website"/>
+            <br/>
+
+        <!-- <span style="font-size:15px;" t-if="o.state in ('draft','pending','draft_quot', 'sent')"> QUOTATION</span>
+                            <span style="font-size:15px;" t-if="o.state in ('sale', 'done')">SALE ORDER</span>
+                            <span style="font-size:15px;" t-if="o.state in ('cancel')">CANCELLED SALE ORDER</span> -->
+            <div class="row" style="border-top: 1px solid gray;">
+                <div class="col-10"></div>
+
+                <div class="col-2 pull-right">
+                    <small class="pull-right">
+                        <span>Page</span>
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                        <br/>
+                        <br/>
+                        <span style="font-size:8px;">
+                            DOC:
+                            <span style="font-size:8px;" t-field="o.name"/>
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</odoo>

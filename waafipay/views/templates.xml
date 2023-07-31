@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="waafipay_form">
+            <div>
+                <input type="hidden" name="data_set" t-att-data-action-url="hppUrl" data-remove-me=""/>
+                <input type="hidden" name="referenceId" t-att-value="referenceId"/>
+                <input type="hidden" name="hppRequestId" t-att-value="hppRequestId"/>
+            </div>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- webpage record Free Trial-->
+    <template id="index">
+        <t t-call="web.login_layout">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <!--===============================================================================================-->	
+                <link rel="icon" type="image/png" href="/solvera_create_db/static/images/icons/favicon.ico"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/bootstrap/css/bootstrap.min.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/fonts/iconic/css/material-design-iconic-font.min.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/animate/animate.css"/>
+            <!--===============================================================================================-->	
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/css-hamburgers/hamburgers.min.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/animsition/css/animsition.min.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/select2/select2.min.css"/>
+            <!--===============================================================================================-->	
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/vendor/daterangepicker/daterangepicker.css"/>
+            <!--===============================================================================================-->
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/css/util.css"/>
+                <link rel="stylesheet" type="text/css" href="/solvera_create_db/static/css/main.css"/>
+            <!--===============================================================================================-->
+            </head>
+            <body>	
+                <div class="limiter">
+                    <div class="container-login100" style="background-image: url('/solvera_create_db/static/images/bg-01.png');">
+                        <div class="wrap-login100 p-l-55 p-r-55 p-t-30 p-b-30" style="width:450px">
+                            <form class="login100-form validate-form" action="/web/berhasil">
+                                <span class="login100-form-title p-b-5" style="font-size: 30px;">
+                                    Daftar
+                                </span>
+                                <div class="wrap-input100 validate-input m-b-23" data-validate = "Full Name">
+                                    <span class="label-input100">Full Name</span>
+                                    <input class="input100" type="text" id='name' name="name" placeholder="Full Name" required="1" style="height: 35px;"/>
+                                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                                </div>
+                                <div class="wrap-input100 validate-input m-b-23" data-validate = "Company Name">
+                                    <span class="label-input100">Company Name</span>
+                                    <input class="input100" type="text" id='username' name="username" placeholder="Company Name" required="1" style="height: 35px;"/>
+                                    <span class="focus-input100" data-symbol="&#x25EB;"></span>
+                                </div>
+
+                                <p class="alert alert-danger" t-if="error" role="alert">
+                                    <t t-esc="error"/>
+                                </p>
+                                <div class="wrap-input100 validate-input m-b-23" data-validate = "Email Adress">
+                                    <span class="label-input100">Email Address</span>
+                                    <input class="input100" type="text" id='email' name="email" placeholder="Email Adress" required="1" style="height: 35px;"/>
+                                    <span class="focus-input100" data-symbol="&#x25DB;"></span>
+                                </div>
+                                <div class="wrap-input100 validate-input m-b-23" data-validate = "Phone Number">
+                                    <span class="label-input100">Phone</span>
+                                    <input class="input100" type="text" id='phone' name="phone" placeholder="Phone Number" required="1" style="height: 35px;"/>
+                                    <span class="focus-input100" data-symbol="&#x260F;"></span>
+                                </div>
+                                <div class="wrap-input100 validate-input m-b-23" data-validate = "Password">
+                                    <span class="label-input100">Password</span>
+                                    <input class="input100" type="password" id='pw' name="pw" placeholder="Password" required="1" style="height: 35px;"/>
+                                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="packet">Choose a packet</label>
+
+                                    <select name="packet" id="packet">
+                                        <option value="1">Lite</option>
+                                        <option value="2">Advance</option>
+                                        <option value="3">profesional</option>
+                                    </select> 
+                                </div>
+
+                            
+                                <div class="container-login100-form-btn">
+                                    <div class="wrap-login100-form-btn">
+                                        <div class="login100-form-bgbtn"></div>
+                                        <button class="login100-form-btn">
+                                            Daftar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex-col-c p-t-15">
+                                    <a href="/web/login/USER" class="txt2">
+                                        lOGIN
+                                    </a>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="dropDownSelect1"></div>
+                
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/jquery/jquery-3.2.1.min.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/animsition/js/animsition.min.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/bootstrap/js/popper.js"></script>
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/select2/select2.min.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/daterangepicker/moment.min.js"></script>
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/daterangepicker/daterangepicker.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/vendor/countdowntime/countdowntime.js"></script>
+            <!--===============================================================================================-->
+                <script type="text/javascript" src="/solvera_create_db/static/js/main.js"></script>
+            </body>
+        </t>
+
+    </template>
+
+    <template id="user_sign_in" name="User Sign In" inherit_id="portal.placeholder_user_sign_in">
+        <xpath expr="." position="replace">
+            <li groups="base.group_public" t-attf-class="#{_item_class} o_no_autohide_item">
+                <a t-attf-href="/web/login/user" t-attf-class="#{_link_class}">Sign in</a>
+            </li>
+        </xpath>
+    </template>
+</odoo>

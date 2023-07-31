@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='payment_action' model='ir.actions.act_window'>
+        <field name="name">Payments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">payment.borrower</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Add Payments
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Repayments" id="payment_menu" parent="loan_base_menu" action="payment_action" sequence="2" />
+    <!-- Form view-->
+    <record id="payment_view_form" model="ir.ui.view">
+        <field name="name">payment.borrower.view.form</field>
+        <field name="model">payment.borrower</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group string="Add Payment">
+                        <field name="loan_number" />
+                        <field name="payee" />
+                        <field name="paid_date" />
+                        <field name="paid_amount" />
+                        <field name="method" />
+                        <field name="receipt" />
+                        <field name="collected_by" />
+                        <field name="description" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view-->
+    <record id="payment_tree_view" model="ir.ui.view">
+        <field name="name">payment.borrower.view.tree</field>
+        <field name="model">payment.borrower</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="loan_number" />
+                <field name="payee" />
+                <field name="paid_amount" />
+                <field name="method" />
+                <field name="paid_date" />
+                <field name="collected_by" />
+            </tree>
+        </field>
+    </record>    
+</odoo>
